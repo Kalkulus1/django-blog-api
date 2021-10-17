@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     # 3rd-party apps
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_swagger',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth',
     'rest_auth.registration',
+    
 
     'posts.apps.PostsConfig',
 ]
@@ -59,6 +61,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication'
     ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
 MIDDLEWARE = [
@@ -85,6 +88,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {  
+                'staticfiles': 'django.templatetags.static',
+                }, # solves swagger problem
         },
     },
 ]
@@ -148,3 +154,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
+
+
+# Swagger settings for Login and Logout
+SWAGGER_SETTINGS = {
+'LOGIN_URL': 'rest_framework:login',
+'LOGOUT_URL': 'rest_framework:logout',
+}
